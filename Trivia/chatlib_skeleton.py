@@ -34,9 +34,11 @@ def build_message(cmd, data):
 	Gets command name (str) and data field (str) and creates a valid protocol message
 	Returns: str, or None if error occured
 	"""
-    # Implement code ...
 
-    return full_msg
+	msg_len = len(data)
+	formatted_number = "{:04d}".format(msg_len)
+	full_msg = cmd+ "|" +formatted_number + "|" + data
+	return full_msg
 
 
 def parse_message(data):
@@ -44,10 +46,16 @@ def parse_message(data):
 	Parses protocol message and returns command name and data field
 	Returns: cmd (str), data (str). If some error occured, returns None, None
 	"""
-    # Implement code ...
+	lst = data.split("|")
+	if len(lst) != 3:
+		return None, None
 
-    # The function should return 2 values
-    return cmd, msg
+	cmd = lst[0]
+	msg = lst[2]
+	if int(lst[1]) != len(msg):
+		return None, None
+
+	return cmd, msg
 
 	
 def split_data(msg, expected_fields):
@@ -70,7 +78,7 @@ def join_data(msg_fields):
 	# Implement code:
 	result= ""
 	while len(msg_fields) != 0:
-		result += msg_fields.pop
+		result += str(msg_fields.pop)
 		if len(msg_fields) != 0:
 			result+= "#"
 	return result
