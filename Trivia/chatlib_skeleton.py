@@ -1,5 +1,5 @@
 # Protocol Constants
-#ttp111
+#all set ready to work!
 
 CMD_FIELD_LENGTH = 16	# Exact length of cmd field (in bytes)
 LENGTH_FIELD_LENGTH = 4   # Exact length of length field (in bytes)
