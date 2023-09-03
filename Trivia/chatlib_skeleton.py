@@ -56,7 +56,10 @@ def split_data(msg, expected_fields):
 	using protocol's data field delimiter (|#) and validates that there are correct number of fields.
 	Returns: list of fields if all ok. If some error occured, returns None
 	"""
-	# Implement code ...
+	# Implement code:
+	result = msg.split("#")
+	if result.len == expected_fields+1 : return result
+	return None
 
 
 def join_data(msg_fields):
@@ -64,4 +67,11 @@ def join_data(msg_fields):
 	Helper method. Gets a list, joins all of it's fields to one string divided by the data delimiter. 
 	Returns: string that looks like cell1#cell2#cell3
 	"""
-	# Implement code ...
+	# Implement code:
+	result= ""
+	while len(msg_fields) != 0:
+		result += msg_fields.pop
+		if len(msg_fields) != 0:
+			result+= "#"
+	return result
+
