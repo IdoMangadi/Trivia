@@ -37,7 +37,7 @@ def build_message(cmd, data):
 
 	msg_len = len(data)
 	formatted_number = "{:04d}".format(msg_len)
-	full_msg = cmd+ "|" +formatted_number + "|" + data
+	full_msg = cmd+ "|" +formatted_number+ "|" + data
 	return full_msg
 
 
@@ -66,7 +66,8 @@ def split_data(msg, expected_fields):
 	"""
 	# Implement code:
 	result = msg.split("#")
-	if result.len == expected_fields+1 : return result
+	if result.len == expected_fields+1:
+		return result
 	return None
 
 
@@ -80,6 +81,6 @@ def join_data(msg_fields):
 	while len(msg_fields) != 0:
 		result += str(msg_fields.pop)
 		if len(msg_fields) != 0:
-			result+= "#"
+			result += "#"
 	return result
 
