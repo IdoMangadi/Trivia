@@ -54,13 +54,11 @@ def parse_message(data):
 	if len(lst) != 3:
 		return None, None
 
+	cmd = lst[0].strip()
+	msg = lst[2].strip()
+	sec_f = lst[1].strip()
 
-	cmd1 = lst[0]
-	cmd = cmd1.replace(" ", "")
-
-	msg = lst[2]
-
-	if int(lst[1]) != len(msg):
+	if not sec_f.isdigit() or int(sec_f) != len(msg):
 		return None, None
 
 	return cmd, msg
