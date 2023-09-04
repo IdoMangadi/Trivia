@@ -54,10 +54,12 @@ def parse_message(data):
 	if len(lst) != 3:
 		return None, None
 
+
 	cmd1 = lst[0]
 	cmd = cmd1.replace(" ", "")
 
 	msg = lst[2]
+
 	if int(lst[1]) != len(msg):
 		return None, None
 
