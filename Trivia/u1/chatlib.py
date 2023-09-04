@@ -34,9 +34,13 @@ def build_message(cmd, data):
 	Gets command name (str) and data field (str) and creates a valid protocol message
 	Returns: str, or None if error occured
 	"""
+	if (data is None) | (cmd is None) | (len(cmd) > 16) | (len(data) > MAX_DATA_LENGTH):
+		return None
 
 	msg_len = len(data)
 	formatted_number = "{:04d}".format(msg_len)
+	while len(cmd) < 16:
+		cmd += " "
 	full_msg = cmd+ "|" +formatted_number+ "|" + data
 	return full_msg
 
@@ -50,7 +54,9 @@ def parse_message(data):
 	if len(lst) != 3:
 		return None, None
 
-	cmd = lst[0]
+	cmd1 = lst[0]
+	cmd = cmd1.replace(" ", "")
+
 	msg = lst[2]
 	if int(lst[1]) != len(msg):
 		return None, None
@@ -77,7 +83,7 @@ def join_data(msg_fields):
 	Returns: string that looks like cell1#cell2#cell3
 	"""
 	# Implement code:
-	result= ""
+	result = ""
 	while len(msg_fields) != 0:
 		result += str(msg_fields.pop)
 		if len(msg_fields) != 0:
