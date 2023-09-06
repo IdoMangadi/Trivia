@@ -14,15 +14,15 @@ SERVER_IP = "127.0.0.1"
 # HELPER SOCKET METHODS
 
 def build_and_send_message(conn, code, msg):
-	## copy from client
-	
-	print("[SERVER] ",full_msg)	  # Debug print
+	to_send = chatlib.build_message(code, msg)
+	conn.send(to_send.encode())
+	print("[SERVER] ", to_send)	  # Debug print
 
 def recv_message_and_parse(conn):
-	## copy from client
-	
-	print("[CLIENT] ",full_msg)	  # Debug print
-	
+	full_msg = conn.recv(chatlib.MAX_MSG_LENGTH).decode()
+	cmd, data = chatlib.parse_message(full_msg)
+	print("[CLIENT] ", full_msg)  # Debug print
+	return cmd, data
 
 
 # Data Loaders #
@@ -62,24 +62,24 @@ def setup_socket():
 	Recieves: -
 	Returns: the socket object
 	"""
-	# Implement code ...
-	
+	print("Setting up server..")
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	sock.bind((SERVER_IP, SERVER_PORT))
+	sock.listen()
+	print("Listening for clients")
 	return sock
 	
 
-
-		
 def send_error(conn, error_msg):
 	"""
 	Send error message with given message
 	Recieves: socket, message error string from called function
 	Returns: None
 	"""
-	# Implement code ...
-	
+	to_send = chatlib.build_message("ERROR", error_msg)
+	conn.send(to_send.encode())
 
 
-	
 ##### MESSAGE HANDLING
 
 
@@ -94,9 +94,10 @@ def handle_logout_message(conn):
 	Recieves: socket
 	Returns: None
 	"""
+	conn.close()
 	global logged_users
 	
-	# Implement code ...
+
 
 
 def handle_login_message(conn, data):
@@ -108,8 +109,18 @@ def handle_login_message(conn, data):
 	"""
 	global users  # This is needed to access the same users dictionary from all functions
 	global logged_users	 # To be used later
-	
-	# Implement code ...
+	lst = data.split("#")
+	user_name = lst[0]
+	password = lst[1]
+
+	if user_name in users:
+		if password == users[user_name]:
+			to_send = chatlib.build_message("LOGIN_OK", "")
+			conn.send(to_send.encode())
+		else:
+			send_error(conn, user_name + " is not a valid password")
+	else:
+		send_error(conn, user_name+" is not a valid user")
 
 
 def handle_client_message(conn, cmd, data):
