@@ -1,6 +1,7 @@
 import socket
 import chatlib
 import select
+import random
 
 # GLOBALS
 users = {}
@@ -18,13 +19,13 @@ MAX_MSG_LENGTH = 1024
 def build_and_send_message(conn, code, msg):
 	to_send = chatlib.build_message(code, msg)
 	conn.send(to_send.encode())
-	print("[SERVER] ", to_send)	  # Debug print
+	print("[SERVER SENT:] ", to_send)	  # Debug print
 
 
 def recv_message_and_parse(conn):
 	full_msg = conn.recv(chatlib.MAX_MSG_LENGTH).decode()
 	cmd, data = chatlib.parse_message(full_msg)
-	print("[CLIENT] ", full_msg)  # Debug print
+	print("[CLIENT SENT:] ", full_msg)  # Debug print
 	return cmd, data
 
 
@@ -37,8 +38,8 @@ def load_questions():
 	Returns: questions dictionary
 	"""
 	questions = {
-				2313 : {"question":"How much is 2+2","answers":["3","4","2","1"],"correct":2},
-				4122 : {"question":"What is the capital of France?","answers":["Lion","Marseille","Paris","Montpellier"],"correct":3} 
+				0 : {"question":"How much is 2+2","answers":["3","4","2","1"],"correct":2},
+				1 : {"question":"What is the capital of France?","answers":["Lion","Marseille","Paris","Montpellier"],"correct":3}
 				}
 	
 	return questions
@@ -66,11 +67,11 @@ def setup_socket():
 	Recieves: -
 	Returns: the socket object
 	"""
-	print("Setting up server..")
+	print("SETTING UP SERVER....")
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock.bind((SERVER_IP, SERVER_PORT))
 	sock.listen()
-	print("Listening for clients")
+	print("LISTENING FOR CLIENTS.")
 	return sock
 	
 
@@ -95,7 +96,6 @@ def handle_getscore_message(conn, username):
 
 def handle_highscore_message(conn):
 	global users
-	users = load_user_database()
 	results = ""
 
 	for i in range(5):
@@ -128,7 +128,6 @@ def handle_logout_message(conn):
 	Returns: None
 	"""
 	global logged_users
-	print(logged_users)
 	del logged_users[str(conn.getpeername())]
 	conn.close()
 	
@@ -151,11 +150,10 @@ def handle_login_message(conn, data):
 			to_send = chatlib.build_message("LOGIN_OK", "")
 			conn.send(to_send.encode())
 			logged_users[str(conn.getpeername())] = user_name
-			print("user name: "+ user_name)
-			print("peer name: "+ str(conn.getpeername()))
-			print(logged_users)
+			print("NEW USER ENTERED THE GAME: "+ user_name)
+			print("NOW LOGGED IN: ", logged_users)
 		else:
-			send_error(conn, user_name + " is not a valid password")
+			send_error(conn, password + " is not a valid password")
 	else:
 		send_error(conn, user_name+" is not a valid user")
 
@@ -169,8 +167,7 @@ def handle_client_message(conn, cmd, data):
 	global logged_users	 # To be used later
 
 	if str(conn.getpeername()) not in logged_users:
-		print("Not in the right place")
-		print(str(conn.getpeername()))
+		print(str(conn.getpeername())+ "IS TRYING TO CONNECT.")
 		if cmd == "LOGIN":
 			handle_login_message(conn, data)
 		return
@@ -179,7 +176,6 @@ def handle_client_message(conn, cmd, data):
 			handle_logout_message(conn)
 			return
 		if cmd == "MY_SCORE":
-			print("server got MY_SCORE, cmd = "+cmd)
 			handle_getscore_message(conn, logged_users[str(conn.getpeername())])
 			return
 		if cmd == "HIGHSCORE":
@@ -188,9 +184,44 @@ def handle_client_message(conn, cmd, data):
 		if cmd == "LOGGED":
 			handle_logged_message(conn)
 			return
+		if cmd == "GET_QUESTION":
+			handle_question_message(conn)
+			return
+		if cmd == "SEND_ANSWER":
+			to_user_name = logged_users[str(conn.getpeername())]
+			handle_answer_message(conn,to_user_name, data)
+			return
 
 	send_error(conn, "Unknown command, please try again.")
 
+
+def create_random_question():
+	global questions
+	random_number = random.randint(0, len(questions)-1)
+	res = str(random_number)+"#"
+	sub_dict = questions[random_number]
+	tmp1 = sub_dict["question"]
+	res = res+tmp1+"#"
+	tmp2 = sub_dict["answers"]
+	for ans in tmp2:
+		res = res+ans+"#"
+	return res[:-1]
+
+
+def handle_question_message(conn):
+	build_and_send_message(conn, "YOUR_QUESTION", create_random_question())
+
+
+def handle_answer_message(conn, user_name, data):
+	global users
+	data2 = data.split("#")
+	sub_dict = questions[int(data2[0])]
+	correct_answer = sub_dict["correct"]
+	if correct_answer != int(data2[1]):
+		build_and_send_message(conn,"WRONG_ANSWER", data2[1])
+	else:
+		users[user_name]["score"] += 5
+		build_and_send_message(conn, "CORRECT_ANSWER", "")
 
 
 def main():
@@ -198,8 +229,9 @@ def main():
 	global users
 	global questions
 	users = load_user_database()
+	questions = load_questions()
 
-	print("Welcome to Trivia Server!")
+	print("WELCOME TO TRIVIA SERVER!")
 	server_socket = setup_socket()
 	client_sockets = []
 
@@ -209,12 +241,10 @@ def main():
 			# Handling a new client:
 			if current_socket is server_socket:
 				(client_socket, client_address) = current_socket.accept()
-				# print("New client joined")
 				client_sockets.append(client_socket)
 			else:
 				try:
 					cmd, data = recv_message_and_parse(current_socket)
-					print("cmd = "+cmd+" data = " + data)
 					if data is None or cmd == "LOGOUT":
 						client_sockets.remove(current_socket)
 						handle_logout_message(current_socket)

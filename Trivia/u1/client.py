@@ -9,7 +9,6 @@ SERVER_PORT = 5678
 def build_and_send_message(conn, code, data):
     to_send = chatlib.build_message(code, data)
     conn.send(to_send.encode())
-    print("data sent: "+to_send)
 
 
 def recv_message_and_parse(conn):
@@ -21,9 +20,7 @@ def recv_message_and_parse(conn):
     If error occured, will return None, None
     """
     full_msg = conn.recv(chatlib.MAX_MSG_LENGTH).decode()
-    print("full_msg: " + str(full_msg))
     cmd, data = chatlib.parse_message(full_msg)
-    print("f_cmd: " + str(cmd))  # -> None!
     return cmd, data
 
 
@@ -60,37 +57,34 @@ def build_send_recv_parse(conn, cmd, data):
 
 def get_score(conn):
     cmd, data = build_send_recv_parse(conn, "MY_SCORE", "")
-    print("cmd: "+str(cmd))
-    print("data: " + str(data))
     if str(cmd) != "YOUR_SCORE":
-        print("ERROR")
+        print("\nERROR")
     else:
-        print(data)
+        print("\nYOUR SCORE: "+ data)
 
 
 def get_highscore(conn):
     cmd, data = build_send_recv_parse(conn, "HIGHSCORE", "")
-    print("cmd: " + str(cmd))
     if str(cmd) != "ALL_SCORE":
-        print("ERROR")
+        print("\nERROR")
     else:
-        print(data)
+        print("\nSCORES TABLE:\n"+ data)
 
 
 def play_question(conn):
     cmd, q_data = build_send_recv_parse(conn, "GET_QUESTION", "")
-    q_lst = chatlib.split_data(q_data)
-    print("Question number: "+q_lst[0]+": "+ q_lst[1]+"\n1. "+q_lst[2]+"\n2. "+q_lst[3]+"\n3. "+q_lst[4]+"\n4. "+q_lst[5])
+    q_lst = q_data.split("#")
+    print("\nQuestion number: "+q_lst[0]+": "+ q_lst[1]+"\n1. "+q_lst[2]+"\n2. "+q_lst[3]+"\n3. "+q_lst[4]+"\n4. "+q_lst[5])
     cmd2, data2 = build_send_recv_parse(conn, "SEND_ANSWER", q_lst[0]+"#"+input("Your answer: "))
     if str(cmd2) == "CORRECT_ANSWER":
         print("You are right!")
     else:
-        print("You are wrong, the right answer is: "+ q_lst[data2+1])
+        print("You are wrong, the right answer is: "+ q_lst[int(data2)+1])
 
 
 def get_logged_users(conn):
     cmd, data = build_send_recv_parse(conn, "LOGGED", "")
-    print("The logged in users now are: "+str(data))
+    print("\nThe logged in users now are: "+str(data))
 
 
 def logout(conn):
@@ -102,8 +96,8 @@ def main():
         sock = connect()
         login(sock)
         while True:
-            print("What would you like to do now?")
-            print("1 - Show your score")
+            print("\nWhat would you like to do now?")
+            print("1 - Show my score")
             print("2 - Show scores table")
             print("3 - Play a question")
             print("4 - See hou logged in")
