@@ -2,11 +2,12 @@ import socket
 import chatlib
 import select
 import random
+import json
 
 # GLOBALS
 users = {}
 questions = {}
-logged_users = {} # a dictionary of client hostnames to usernames - will be used later
+logged_users = {} # a dictionary of client hostnames to usernames
 
 ERROR_MSG = "Error! "
 SERVER_PORT = 5678
@@ -51,14 +52,13 @@ def load_user_database():
 	Recieves: -
 	Returns: user dictionary
 	"""
-	users = {
-			"test"		:	{"password":"test","score":0,"questions_asked":[]},
-			"yossi"		:	{"password":"123","score":50,"questions_asked":[]},
-			"master"	:	{"password":"master","score":200,"questions_asked":[]}
-			}
-	return users
 
-	
+	data = {}
+	with open('users.json', 'r', encoding='utf-8') as file:
+		user_data = json.load(file)
+		data.update(user_data)
+	return data
+
 # SOCKET CREATOR
 
 def setup_socket():
@@ -128,7 +128,8 @@ def handle_logout_message(conn):
 	Returns: None
 	"""
 	global logged_users
-	del logged_users[str(conn.getpeername())]
+	if str(conn.getpeername()) in logged_users:
+		del logged_users[str(conn.getpeername())]
 	conn.close()
 	
 
@@ -139,8 +140,8 @@ def handle_login_message(conn, data):
 	Receives: socket, message code and data
 	Returns: None (sends answer to client)
 	"""
-	global users  # This is needed to access the same users dictionary from all functions
-	global logged_users	 # To be used later
+	global users
+	global logged_users
 	lst = data.split("#")
 	user_name = lst[0]
 	password = lst[1]
@@ -158,6 +159,21 @@ def handle_login_message(conn, data):
 		send_error(conn, user_name+" is not a valid user")
 
 
+def handle_register_massage(conn, data):
+	global users
+	reg = data.split("#")
+
+	if reg[0] in users:
+		build_and_send_message(conn, "FAILED_REG", "username already exist")
+		return
+
+	tmp = {"password": reg[1], "score": 0, "questions_asked": []}
+	users[reg[0]] = tmp
+	with open('users.json', 'w', encoding='utf-8') as file:
+		json.dump(users, file, indent=4)
+	build_and_send_message(conn, "SEC_REG", "")
+
+
 def handle_client_message(conn, cmd, data):
 	"""
 	Gets message code and data and calls the right function to handle command
@@ -167,10 +183,13 @@ def handle_client_message(conn, cmd, data):
 	global logged_users	 # To be used later
 
 	if str(conn.getpeername()) not in logged_users:
-		print(str(conn.getpeername())+ "IS TRYING TO CONNECT.")
 		if cmd == "LOGIN":
+			print(str(conn.getpeername()) + "IS TRYING TO ENTER THE GAME.")
 			handle_login_message(conn, data)
-		return
+			return
+		if cmd == "REGISTER":
+			handle_register_massage(conn, data)
+			return
 	else:
 		if cmd == "LOGOUT":
 			handle_logout_message(conn)
@@ -221,11 +240,12 @@ def handle_answer_message(conn, user_name, data):
 		build_and_send_message(conn,"WRONG_ANSWER", data2[1])
 	else:
 		users[user_name]["score"] += 5
+		with open('users.json', 'w', encoding='utf-8') as file:
+			json.dump(users, file, indent=4)
 		build_and_send_message(conn, "CORRECT_ANSWER", "")
 
 
 def main():
-	# Initializes global users and questions dictionaries using load functions, will be used later
 	global users
 	global questions
 	users = load_user_database()
@@ -242,6 +262,7 @@ def main():
 			if current_socket is server_socket:
 				(client_socket, client_address) = current_socket.accept()
 				client_sockets.append(client_socket)
+				print("NEW CLIENT CONNECTED: IP: "+client_address[0]+" PORT: "+str(client_address[1]))
 			else:
 				try:
 					cmd, data = recv_message_and_parse(current_socket)

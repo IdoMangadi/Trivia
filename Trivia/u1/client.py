@@ -44,9 +44,11 @@ def login(conn):
         cmd, data = recv_message_and_parse(conn)
         if cmd == chatlib.PROTOCOL_SERVER["login_ok_msg"]:
             print(cmd)
-            return
+            return 1
         else:
             print(chatlib.PROTOCOL_SERVER["login_failed_msg"] + ": " + data)
+        if input("1. Try again\n2. Back\nYour answer: ") == "2":
+            return 0
 
 
 def build_send_recv_parse(conn, cmd, data):
@@ -91,32 +93,50 @@ def logout(conn):
     build_and_send_message(conn, "LOGOUT", "")
 
 
+def register(conn):
+    reg_user = input("Enter your new username: ")
+    reg_pass = input("Enter you new password: ")
+    build_and_send_message(conn, "REGISTER", reg_user+"#"+reg_pass)
+    cmd, data = recv_message_and_parse(conn)
+    if cmd == "SEC_REG":
+        print("Successfully registered: "+reg_user)
+    else:
+        print("Registration failed because: "+data)
+
+
 def main():
-    while input("Do you want to play? \n1 - Yes, continue to the game\n2 - No, exit app\n") == "1":
+    print("Hi welcome to TRIVIA game !")
+    first_input = input("1. Login\n2. Register\n3. Exit\nYour Answer:")
+    while first_input == "1" or first_input == "2":
         sock = connect()
-        login(sock)
-        while True:
-            print("\nWhat would you like to do now?")
-            print("1 - Show my score")
-            print("2 - Show scores table")
-            print("3 - Play a question")
-            print("4 - See hou logged in")
-            print("5 - Logout")
+        if first_input == "1":
+            login_check = login(sock)
+            if login_check == 1:
+                while True:
+                    print("\nWhat would you like to do now?")
+                    print("1 - Show my score")
+                    print("2 - Show scores table")
+                    print("3 - Play a question")
+                    print("4 - See hou logged in")
+                    print("5 - Logout")
 
-            ans = input("Your answer:")
+                    ans = input("Your answer:")
 
-            if ans == "1":
-                get_score(sock)
-            if ans == "2":
-                get_highscore(sock)
-            if ans == "3":
-                play_question(sock)
-            if ans == "4":
-                get_logged_users(sock)
-            if ans == "5":
-                break
-        logout(sock)
+                    if ans == "1":
+                        get_score(sock)
+                    if ans == "2":
+                        get_highscore(sock)
+                    if ans == "3":
+                        play_question(sock)
+                    if ans == "4":
+                        get_logged_users(sock)
+                    if ans == "5":
+                        break
+                logout(sock)
+        if first_input == "2":
+            register(sock)
         sock.close()
+        first_input = input("What would you like to do now?\n1. Login\n2. Register\n3. Exit\nYour Answer:")
 
     print("Bye Bye... :)")
 
