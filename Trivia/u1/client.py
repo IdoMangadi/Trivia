@@ -1,7 +1,7 @@
 import socket
-import chatlib  # To use chatlib functions or consts, use chatlib.****
+import chatlib
 
-SERVER_IP = "127.0.0.1"  # Our server will run on same computer as client
+SERVER_IP = "127.0.0.1"
 SERVER_PORT = 5678
 
 # HELPER SOCKET METHODS
