@@ -38,12 +38,14 @@ def load_questions():
 	Recieves: -
 	Returns: questions dictionary
 	"""
-	questions = {
-				0 : {"question":"How much is 2+2","answers":["3","4","2","1"],"correct":2},
-				1 : {"question":"What is the capital of France?","answers":["Lion","Marseille","Paris","Montpellier"],"correct":3}
-				}
-	
-	return questions
+
+	try:
+		with open('questions.json', 'r', encoding='utf-8') as file:
+			questions_data = json.load(file)
+			return questions_data
+	except FileNotFoundError:
+		print(f"The file 'questions.json' was not found.")
+		return {}
 
 
 def load_user_database():
@@ -218,7 +220,7 @@ def create_random_question():
 	global questions
 	random_number = random.randint(0, len(questions)-1)
 	res = str(random_number)+"#"
-	sub_dict = questions[random_number]
+	sub_dict = questions[str(random_number)]
 	tmp1 = sub_dict["question"]
 	res = res+tmp1+"#"
 	tmp2 = sub_dict["answers"]
@@ -234,10 +236,11 @@ def handle_question_message(conn):
 def handle_answer_message(conn, user_name, data):
 	global users
 	data2 = data.split("#")
-	sub_dict = questions[int(data2[0])]
+	sub_dict = questions[data2[0]]
 	correct_answer = sub_dict["correct"]
-	if correct_answer != int(data2[1]):
-		build_and_send_message(conn,"WRONG_ANSWER", data2[1])
+
+	if int(correct_answer) != int(data2[1]):
+		build_and_send_message(conn, "WRONG_ANSWER", str(correct_answer))
 	else:
 		users[user_name]["score"] += 5
 		with open('users.json', 'w', encoding='utf-8') as file:

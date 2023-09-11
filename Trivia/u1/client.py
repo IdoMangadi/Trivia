@@ -78,6 +78,7 @@ def play_question(conn):
     q_lst = q_data.split("#")
     print("\nQuestion number: "+q_lst[0]+": "+ q_lst[1]+"\n1. "+q_lst[2]+"\n2. "+q_lst[3]+"\n3. "+q_lst[4]+"\n4. "+q_lst[5])
     cmd2, data2 = build_send_recv_parse(conn, "SEND_ANSWER", q_lst[0]+"#"+input("Your answer: "))
+    print("check"+str(cmd2))
     if str(cmd2) == "CORRECT_ANSWER":
         print("You are right!")
     else:
