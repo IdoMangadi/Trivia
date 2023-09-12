@@ -1,0 +1,307 @@
+{
+    "0": {
+        "question": "How much is 2+2?",
+        "answers": ["3", "4", "2", "1"],
+        "correct": 2
+    },
+    "1": {
+        "question": "What is the capital of France?",
+        "answers": ["Lion", "Marseille", "Paris", "Montpellier"],
+        "correct": 3
+    },
+    "2": {
+        "question": "Who wrote the play 'Romeo and Juliet'?",
+        "answers": ["Charles Dickens", "William Shakespeare", "Leo Tolstoy", "Jane Austen"],
+        "correct": 2
+    },
+    "3": {
+        "question": "What is the chemical symbol for gold?",
+        "answers": ["Au", "Ag", "Fe", "Cu"],
+        "correct": 1
+    },
+    "4": {
+        "question": "What gas do plants absorb from the atmosphere during photosynthesis?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+        "correct": 2
+    },
+    "5": {
+        "question": "What is the largest planet in our solar system?",
+        "answers": ["Mars", "Earth", "Jupiter", "Venus"],
+        "correct": 3
+    },
+    "6": {
+        "question": "Which mammal can fly?",
+        "answers": ["Bat", "Kangaroo", "Whale", "Elephant"],
+        "correct": 1
+    },
+    "7": {
+        "question": "What is the largest organ in the human body?",
+        "answers": ["Heart", "Brain", "Skin", "Lung"],
+        "correct": 3
+    },
+    "8": {
+        "question": "Which gas do plants release during photosynthesis?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+        "correct": 1
+    },
+    "9": {
+        "question": "Which planet is known as the 'Red Planet'?",
+        "answers": ["Mars", "Earth", "Jupiter", "Venus"],
+        "correct": 1
+    },
+    "10": {
+        "question": "What is the largest species of shark?",
+        "answers": ["Great White Shark", "Hammerhead Shark", "Whale Shark", "Tiger Shark"],
+        "correct": 3
+    },
+    "11": {
+        "question": "What is the largest planet in our solar system?",
+        "answers": ["Mars", "Earth", "Jupiter", "Venus"],
+        "correct": 3
+    },
+    "12": {
+        "question": "What is the smallest planet in our solar system?",
+        "answers": ["Mars", "Earth", "Mercury", "Venus"],
+        "correct": 3
+    },
+    "13": {
+        "question": "Which planet is known as the 'Red Planet'?",
+        "answers": ["Mars", "Earth", "Jupiter", "Venus"],
+        "correct": 1
+    },
+    "14": {
+        "question": "What is the largest species of shark?",
+        "answers": ["Great White Shark", "Hammerhead Shark", "Whale Shark", "Tiger Shark"],
+        "correct": 3
+    },
+    "15": {
+        "question": "What is the national flower of Japan?",
+        "answers": ["Rose", "Tulip", "Cherry Blossom", "Lily"],
+        "correct": 3
+    },
+    "16": {
+        "question": "What is the largest continent in the world?",
+        "answers": ["Africa", "Asia", "Europe", "North America"],
+        "correct": 2
+    },
+    "17": {
+        "question": "Which gas is most abundant in Earth's atmosphere?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+        "correct": 3
+    },
+    "18": {
+        "question": "What is the chemical symbol for water?",
+        "answers": ["H2O", "CO2", "O2", "N2"],
+        "correct": 1
+    },
+    "19": {
+        "question": "What is the capital of Brazil?",
+        "answers": ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"],
+        "correct": 2
+    },
+    "20": {
+        "question": "What is the largest desert in the world?",
+        "answers": ["Sahara Desert", "Arabian Desert", "Gobi Desert", "Antarctica"],
+        "correct": 1
+    },
+	"21": {
+        "question": "What is the largest mammal in the world?",
+        "answers": ["Elephant", "Giraffe", "Blue Whale", "Gorilla"],
+        "correct": 3
+    },
+    "22": {
+        "question": "Which planet is often called the 'Evening Star' or 'Morning Star'?",
+        "answers": ["Mars", "Earth", "Venus", "Mercury"],
+        "correct": 3
+    },
+    "23": {
+        "question": "What is the chemical symbol for gold?",
+        "answers": ["Au", "Ag", "Fe", "Hg"],
+        "correct": 1
+    },
+    "24": {
+        "question": "Which gas do plants absorb from the atmosphere?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+        "correct": 2
+    },
+    "25": {
+        "question": "What is the world's longest river?",
+        "answers": ["Amazon River", "Nile River", "Mississippi River", "Yangtze River"],
+        "correct": 2
+    },
+    "26": {
+        "question": "Which country is known as the Land of the Rising Sun?",
+        "answers": ["China", "South Korea", "Japan", "Vietnam"],
+        "correct": 3
+    },
+    "27": {
+        "question": "What is the capital of Spain?",
+        "answers": ["Barcelona", "Seville", "Madrid", "Valencia"],
+        "correct": 3
+    },
+    "28": {
+        "question": "Which planet is closest to the Sun?",
+        "answers": ["Earth", "Mars", "Venus", "Mercury"],
+        "correct": 4
+    },
+    "29": {
+        "question": "What is the chemical symbol for oxygen?",
+        "answers": ["O2", "C", "O", "H2O"],
+        "correct": 3
+    },
+    "30": {
+        "question": "What is the national animal of Australia?",
+        "answers": ["Kangaroo", "Koala", "Emu", "Platypus"],
+        "correct": 1
+    },
+    "31": {
+        "question": "Which planet is known for its beautiful rings?",
+        "answers": ["Mars", "Saturn", "Neptune", "Uranus"],
+        "correct": 2
+    },
+    "32": {
+        "question": "What is the world's largest ocean?",
+        "answers": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+        "correct": 4
+    },
+    "33": {
+        "question": "Which gas is used for filling balloons to make them float?",
+        "answers": ["Helium", "Hydrogen", "Oxygen", "Nitrogen"],
+        "correct": 1
+    },
+    "34": {
+        "question": "What is the largest species of penguin?",
+        "answers": ["Emperor Penguin", "African Penguin", "King Penguin", "Little Blue Penguin"],
+        "correct": 1
+    },
+    "35": {
+        "question": "What is the chemical symbol for carbon dioxide?",
+        "answers": ["C", "O", "CO", "CO2"],
+        "correct": 4
+    },
+    "36": {
+        "question": "What is the national flower of the United States?",
+        "answers": ["Rose", "Daisy", "Tulip", "Sunflower"],
+        "correct": 1
+    },
+    "37": {
+        "question": "Which planet is known for its beautiful blue color?",
+        "answers": ["Mars", "Earth", "Jupiter", "Neptune"],
+        "correct": 4
+    },
+    "38": {
+        "question": "What is the capital of Canada?",
+        "answers": ["Toronto", "Ottawa", "Montreal", "Vancouver"],
+        "correct": 2
+    },
+    "39": {
+        "question": "Which gas is known as the 'silent killer' because it is odorless and colorless?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Carbon monoxide"],
+        "correct": 4
+    },
+    "40": {
+        "question": "What is the chemical symbol for silver?",
+        "answers": ["Si", "S", "Ag", "Sr"],
+        "correct": 3
+    },
+	"41": {
+        "question": "What is the largest planet in our solar system?",
+        "answers": ["Venus", "Mars", "Jupiter", "Saturn"],
+        "correct": 3
+    },
+    "42": {
+        "question": "Which famous physicist developed the theory of relativity?",
+        "answers": ["Isaac Newton", "Galileo Galilei", "Niels Bohr", "Albert Einstein"],
+        "correct": 4
+    },
+    "43": {
+        "question": "What is the chemical symbol for hydrogen?",
+        "answers": ["H", "He", "O", "N"],
+        "correct": 1
+    },
+    "44": {
+        "question": "Which country is known as the Land of the Pharaohs?",
+        "answers": ["Greece", "Italy", "Egypt", "Turkey"],
+        "correct": 3
+    },
+    "45": {
+        "question": "What is the largest desert in the world?",
+        "answers": ["Sahara Desert", "Gobi Desert", "Arabian Desert", "Atacama Desert"],
+        "correct": 1
+    },
+    "46": {
+        "question": "Which element is represented by the symbol 'Fe' on the periodic table?",
+        "answers": ["Iron", "Gold", "Silver", "Copper"],
+        "correct": 1
+    },
+    "47": {
+        "question": "Who wrote the play 'Romeo and Juliet'?",
+        "answers": ["William Shakespeare", "Jane Austen", "Charles Dickens", "F. Scott Fitzgerald"],
+        "correct": 1
+    },
+    "48": {
+        "question": "Which gas is essential for photosynthesis in plants?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+        "correct": 2
+    },
+    "49": {
+        "question": "What is the largest moon in the solar system?",
+        "answers": ["Titan", "Ganymede", "Europa", "Callisto"],
+        "correct": 2
+    },
+    "50": {
+        "question": "Which famous scientist is known for his theory of evolution by natural selection?",
+        "answers": ["Marie Curie", "Isaac Newton", "Charles Darwin", "Stephen Hawking"],
+        "correct": 3
+    },
+    "51": {
+        "question": "What is the capital of China?",
+        "answers": ["Beijing", "Shanghai", "Hong Kong", "Tokyo"],
+        "correct": 1
+    },
+    "52": {
+        "question": "Which planet is often referred to as the 'Red Planet'?",
+        "answers": ["Earth", "Venus", "Mars", "Jupiter"],
+        "correct": 3
+    },
+    "53": {
+        "question": "What is the chemical symbol for sodium?",
+        "answers": ["S", "Na", "Si", "Se"],
+        "correct": 2
+    },
+    "54": {
+        "question": "Who painted the 'Mona Lisa'?",
+        "answers": ["Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci", "Michelangelo"],
+        "correct": 3
+    },
+    "55": {
+        "question": "What is the national animal of Australia?",
+        "answers": ["Kangaroo", "Koala", "Emu", "Platypus"],
+        "correct": 1
+    },
+    "56": {
+        "question": "Which gas makes up the majority of Earth's atmosphere?",
+        "answers": ["Oxygen", "Carbon dioxide", "Nitrogen", "Helium"],
+        "correct": 3
+    },
+    "57": {
+        "question": "Who wrote the 'Harry Potter' book series?",
+        "answers": ["J.R.R. Tolkien", "C.S. Lewis", "J.K. Rowling", "George Orwell"],
+        "correct": 3
+    },
+    "58": {
+        "question": "What is the smallest planet in our solar system?",
+        "answers": ["Venus", "Mars", "Jupiter", "Mercury"],
+        "correct": 4
+    },
+    "59": {
+        "question": "What is the chemical symbol for calcium?",
+        "answers": ["Ca", "C", "Co", "Cu"],
+        "correct": 1
+    },
+    "60": {
+        "question": "Which country is known as the 'Land Down Under'?",
+        "answers": ["Canada", "Australia", "New Zealand", "South Africa"],
+        "correct": 2
+    }
+}
